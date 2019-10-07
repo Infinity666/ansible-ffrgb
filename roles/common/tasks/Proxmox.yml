@@ -1,0 +1,25 @@
+---
+
+- name: Install misc software
+  apt: name={{ item }}
+  with_items:
+  - dnsutils
+  - htop
+  - less
+  - rsync
+  - vim-nox
+  - zsh
+
+- name: Configure misc software
+  copy: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+  - { src: '.zshrc', dest: '/root/.zshrc' }
+  - { src: '.zshrc.local', dest: '/root/.zshrc.local' }
+  - { src: 'motd', dest: '/etc/motd' }
+  - { src: 'vimrc.local', dest: '/etc/vim/vimrc.local' }
+
+- name: Set shell for root user
+  user: name=root shell=/bin/zsh
+
+- name: Set vm.swappiness
+  sysctl: name=vm.swappiness value=10
