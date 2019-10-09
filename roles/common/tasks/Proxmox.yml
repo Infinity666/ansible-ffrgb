@@ -5,6 +5,7 @@
   with_items:
   - dnsutils
   - htop
+  - ipmitool
   - less
   - rsync
   - vim-nox
