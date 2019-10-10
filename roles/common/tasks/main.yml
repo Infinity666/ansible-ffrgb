@@ -1,22 +1,55 @@
 ---
 
-- name: Cleanup
-  apt: autoclean=yes
-  when: ansible_os_family == 'Debian'
+- name: Install misc software
+  apt: name={{ item }}
+  with_items:
+  - dnsutils
+  - git
+  - htop
+  - less
+  - net-tools
+  - openssl
+  - psmisc
+  - pydf
+  - rsync
+  - sudo
+  - vim-nox
+  - zsh
+  - fail2ban
 
-- name: Gather package facts
-  package_facts:
-    manager: apt
-  when: ansible_os_family == 'Debian'
+- name: Install software on KVM VMs
+  apt: name={{ item }}
+  with_items:
+  - acpid
+  - qemu-guest-agent
+  when: ansible_virtualization_role == "guest" and ansible_virtualization_type == "kvm"
 
-- name: Proxmox
-  include: Proxmox.yml
-  when: ansible_os_family == 'Debian' and 'pve-manager' in ansible_facts.packages
+- name: Configure misc software
+  copy: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+  - { src: '.zshrc', dest: '/root/.zshrc' }
+  - { src: '.zshrc.local', dest: '/root/.zshrc.local' }
+  - { src: 'motd', dest: '/etc/motd' }
+  - { src: 'vimrc.local', dest: '/etc/vim/vimrc.local' }
 
-- name: Debian
-  include: Debian.yml
-  when: ansible_os_family == 'Debian' and 'pve-manager' not in ansible_facts.packages
+- name: Set shell for root user
+  user: name=root shell=/bin/zsh
 
-- name: FreeBSD
-  include: FreeBSD.yml
-  when: ansible_distribution == 'FreeBSD'
+- name: Disable hibernation/resume
+  copy: src=resume dest=/etc/initramfs-tools/conf.d/resume
+  notify: update-initramfs
+
+# TODO template /etc/network/interfaces
+
+- name: Fix network interface names
+  copy: src={{ item }} dest=/etc/systemd/network/{{ item }}
+  with_items:
+  - 50-virtio-kernel-names.link
+  - 99-default.link
+  notify: update-initramfs
+
+- name: Prevent normal users from running su
+  lineinfile:
+    path: /etc/pam.d/su
+    regexp: '^.*auth\s+required\s+pam_wheel.so$'
+    line: 'auth       required   pam_wheel.so'
