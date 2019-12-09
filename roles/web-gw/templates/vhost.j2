@@ -2,6 +2,8 @@ server {
 	listen 80;
 	listen [::]:80;
 
+	proxy_set_header X-Forwarded-For $remote_addr;
+
 	server_name _;
 
 	location /.well-known/acme-challenge {
@@ -16,14 +18,15 @@ server {
 	}
 	# temp redirector server
 	location /move.php {
-		proxy_pass https://home.mephis.to/move.php;
+		proxy_pass http://home.mephis.to:2342/move.php;
 	}
+	# updateserver @meph
 	location /firmware-ng/experimental {
-		proxy_pass https://home.mephis.to/ff/experimental/images;
+		proxy_pass http://home.mephis.to:2342/ff/experimental/images;
 	}
-        location /firmware-ng/stable {
-                proxy_pass https://home.mephis.to/ff/stable/images;
-        }
+	location /firmware-ng/stable {
+		proxy_pass http://home.mephis.to:2342/ff/stable/images;
+	}
 }
 
 server {
