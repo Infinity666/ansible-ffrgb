@@ -29,6 +29,8 @@ iface bat-{{ site_code }}
 	up /usr/sbin/batctl -m bat-{{ site_code }} it 5000
 	up /usr/sbin/batctl -m bat-{{ site_code }} multicast_mode 0
 	up /usr/sbin/batctl -m bat-{{ site_code }} ra {{ batman_algo }}
+	up echo 2 > /sys/class/net/bat-{{ site_code }}/brport/multicast_router
+
 
 # dmy-{{ site_code }}
 auto dmy-{{ site_code }}
