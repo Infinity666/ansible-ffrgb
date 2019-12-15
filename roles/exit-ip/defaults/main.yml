@@ -1,3 +1,4 @@
 ---
 
 conntrack_max: 131072
+fastd_instances: 3
