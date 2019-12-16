@@ -7,6 +7,7 @@
   - git
   - htop
   - less
+  - mtr-tiny
   - net-tools
   - openssl
   - psmisc
