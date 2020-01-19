@@ -31,7 +31,7 @@ yanic_database_delete_after: 7d
 yanic_database_delete_interval: 1h
 
 yanic_repondd_enable: true
-yanic_repondd_remotehost: "[2a01:4f8:173:2919::2]:10001"
+yanic_repondd_remotehost: "[2a01:4f8:140:515d::2]:10001"
 
 yanic_influxdb:
 - enable: false
