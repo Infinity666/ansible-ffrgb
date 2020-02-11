@@ -1,5 +1,5 @@
 # Install dependencies:
-# apt-get install python-dnspython
+# apt-get install python-dnspython python3-dnspython
 import dns.resolver
 
 class FilterModule (object):
