@@ -27,6 +27,7 @@
 
 - name: Configure misc software
   copy: src={{ item.src }} dest={{ item.dest }}
+  diff: no
   with_items:
   - { src: '.zshrc', dest: '/root/.zshrc' }
   - { src: '.zshrc.local', dest: '/root/.zshrc.local' }
@@ -52,3 +53,23 @@
     path: /etc/pam.d/su
     regexp: '^.*auth\s+required\s+pam_wheel.so$'
     line: 'auth       required   pam_wheel.so'
+
+- name: Configure journald retention
+  lineinfile:
+    path: "/etc/systemd/journald.conf"
+    state: "present"
+    regexp: "^#?MaxRetentionSec=.*"
+    line: "MaxRetentionSec=7day"
+  notify: Restart journald
+
+- name: Set logrotate.conf to daily
+  replace:
+    path: "/etc/logrotate.conf"
+    regexp: "(?:weekly|monthly)"
+    replace: "daily"
+
+- name: Set logrotate.conf rotation to 7
+  replace:
+    path: "/etc/logrotate.conf"
+    regexp: "rotate [0-9]+"
+    replace: "rotate 7"
