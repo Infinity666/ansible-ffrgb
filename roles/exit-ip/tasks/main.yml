@@ -3,8 +3,11 @@
 - name: Install iptables-persistent
   apt: name=iptables-persistent
 
-- name: Enable IPv4 routing
+- name: Enable IPv4 routing (globally)
   sysctl: name=net.ipv4.ip_forward value=1 state=present
+
+- name: Enable IPv4 routing (primary interface)
+  sysctl: name=net.ipv4.conf.{{ ansible_default_ipv4.interface }}.forwarding value=1 state=present
 
 - name: Load nf_conntrack module
   modprobe: name=nf_conntrack
