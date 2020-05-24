@@ -1,0 +1,10 @@
+Description=Prometheus exporter for Proxmox VE
+Documentation=https://github.com/znerol/prometheus-pve-exporter
+
+[Service]
+Restart=always
+User=prometheus
+ExecStart=/opt/prometheus-pve-exporter/bin/pve_exporter /etc/prometheus/pve.yml
+
+[Install]
+WantedBy=multi-user.target

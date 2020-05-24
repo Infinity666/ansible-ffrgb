@@ -3,9 +3,35 @@
 - name: Install prometheus
   apt: name=prometheus
 
+- name: Install dependencies
+  apt:
+    name:
+    - python-setuptools
+    - python3-setuptools
+    - virtualenv
+
+- name: Install prometheus-pve-exporter
+  pip:
+    name: git+https://github.com/znerol/prometheus-pve-exporter
+    virtualenv: /opt/prometheus-pve-exporter
+    virtualenv_python: python3
+
+- name: Systemd unit for prometheus-pve-exporter
+  copy: src=prometheus-pve-exporter.service dest=/etc/systemd/system/prometheus-pve-exporter.service
+  notify:
+  - Reload systemd
+  - Restart prometheus-pve-exporter
+
 - name: Configure prometheus
   template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml
   notify: Restart prometheus
 
+- name: Configure prometheus-pve-exporter
+  template: src=pve.yml.j2 dest=/etc/prometheus/pve.yml
+  notify: Restart prometheus-pve-exporter
+
 - name: Enable prometheus
   service: name=prometheus state=started enabled=yes
+
+- name: Enable prometheus-pve-exporter
+  service: name=prometheus-pve-exporter state=started enabled=yes
