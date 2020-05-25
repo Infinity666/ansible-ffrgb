@@ -44,12 +44,12 @@ ntp_servers:
 - 2.de.pool.ntp.org
 - 3.de.pool.ntp.org
 
+prometheus_pve_user: prometheus@pve
+prometheus_pve_pass: "{{ vault_prometheus_pve_pass }}"
+
 pve_targets:
 - pve01.ffrgb
 - pve02.ffrgb
-
-prometheus_pve_user: prometheus@pve
-prometheus_pve_pass: "{{ vault_prometheus_pve_pass }}"
 
 site: ffrgb
 site_domain: regensburg.freifunk.net
