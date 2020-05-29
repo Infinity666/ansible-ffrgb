@@ -13,11 +13,6 @@ server {
 
 	root /var/www/html;
 
-	# /firmware is legacy now
-	#location /firmware {
-	#	proxy_pass https://regensburg.freifunk.net/firmware;
-	#}
-
 	# temp redirector server
 	location /move.php {
 		proxy_pass http://home.mephis.to:2342/move.php;
@@ -29,6 +24,13 @@ server {
 	}
 	location /firmware-ng/stable {
 		proxy_pass http://home.mephis.to:2342/ff/stable/images;
+	}
+	# post 11s
+	location /firmware-11s/experimental {
+			proxy_pass http://home.mephis.to:2342/ff/11s/experimental/images;
+	}
+	location /firmware-11s/stable {
+			proxy_pass http://home.mephis.to:2342/ff/11s/stable/images;
 	}
 }
 
@@ -42,11 +44,6 @@ server {
 	ssl_certificate /etc/nginx/ssl/{{ ansible_fqdn }}.crt;
 
 	root /var/www/html;
-
-	# /firmware is legacy now
-	#location /firmware {
-	#	proxy_pass https://regensburg.freifunk.net/firmware;
-	#}
 
 	# updateserver @meph
 	location /firmware-ng/experimental {
