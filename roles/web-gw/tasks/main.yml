@@ -8,7 +8,7 @@
   file: path=/var/www/html state=directory mode=0755
 
 - name: Configure certificate manager
-  template: src=certs.j2 dest=/etc/acme/domains.d/{{ ansible_fqdn }}.conf
+  template: src=certs.j2 dest=/etc/acertmgr/{{ ansible_fqdn }}.conf
   notify: Run acertmgr
 
 - name: Configure vhosts

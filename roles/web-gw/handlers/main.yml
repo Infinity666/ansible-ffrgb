@@ -4,4 +4,4 @@
   service: name=nginx state=restarted
 
 - name: Run acertmgr
-  command: /opt/acertmgr/acertmgr.py
+  command: /usr/bin/acertmgr
