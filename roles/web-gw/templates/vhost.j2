@@ -27,16 +27,18 @@ server {
 	}
 	# post 11s
 	location /firmware-11s/experimental {
-			proxy_pass http://home.mephis.to:2342/ff/11s/experimental/images;
+		proxy_pass http://home.mephis.to:2342/ff/11s/experimental/images;
 	}
 	location /firmware-11s/stable {
-			proxy_pass http://home.mephis.to:2342/ff/11s/stable/images;
+		proxy_pass http://home.mephis.to:2342/ff/11s/stable/images;
 	}
 }
 
 server {
 	listen 443 ssl http2;
 	listen [::]:443 ssl http2;
+
+	proxy_set_header X-Forwarded-For $remote_addr;
 
 	server_name {{ ansible_fqdn }};
 
@@ -51,5 +53,12 @@ server {
 	}
 	location /firmware-ng/stable {
 		proxy_pass http://home.mephis.to:2342/ff/stable/images;
+	}
+	# post 11s
+	location /firmware-11s/experimental {
+		proxy_pass http://home.mephis.to:2342/ff/11s/experimental/images;
+	}
+	location /firmware-11s/stable {
+		proxy_pass http://home.mephis.to:2342/ff/11s/stable/images;
 	}
 }
