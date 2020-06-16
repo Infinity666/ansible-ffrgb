@@ -4,3 +4,5 @@ gw21.regensburg.freifunk.net
 gw31.regensburg.freifunk.net
 stats.ffrgb ansible_host=10.90.224.100
 unms.ffrgb ansible_host=10.90.224.101
+unifi.ffrgb ansible_host=10.90.224.102
+tiles.ffrgb ansible_host=10.90.224.103
