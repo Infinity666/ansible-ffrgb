@@ -1,0 +1,9 @@
+---
+
+- name: Setup reverse proxy
+  include_tasks: reverse.yml
+  with_items: "{{ rev_proxy }}"
+  vars:
+    rev_domain: "{{ item.domain }}"
+    rev_aliases: "{{ item.aliases }}"
+    rev_target: "{{ item.target }}"

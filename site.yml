@@ -26,6 +26,11 @@
   - yanic
   - web-gw
 
+- name: Setup web service proxy
+  hosts: web.regensburg.freifunk.net
+  roles:
+  - web-svc
+
 - name: Setup stats server
   hosts: stats.ffrgb
   roles:
