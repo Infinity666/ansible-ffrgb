@@ -1,0 +1,24 @@
+---
+
+- name: Create data directories
+  file:
+    path: /var/lib/unifi
+    state: directory
+
+- name: Run unifi container
+  docker_container:
+    name: unifi
+    image: jacobalberty/unifi:stable
+    env:
+      RUNAS_UID0: "false"
+      TZ: "Europe/Berlin"
+    init: yes
+    ports:
+    - "8080:8080"
+    - "8443:8443"
+    - "3478:3478/udp"
+    - "10001:10001/udp"
+    restart_policy: unless-stopped
+    state: started
+    volumes:
+    - "/var/lib/unifi:/unifi"

@@ -42,6 +42,11 @@
   roles:
   - docker
 
+- name: Setup unifi server
+  hosts: unifi.ffrgb
+  roles:
+  - unifi
+
 - name: Setup tile server
   hosts: tiles.ffrgb
   roles:
