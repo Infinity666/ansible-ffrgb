@@ -33,6 +33,7 @@ node_targets:
 - stats.ffrgb:9100
 - unms.ffrgb:9100
 - unifi.ffrgb:9100
+- tiles.ffrgb:9100
 
 ntp_servers:
 - 0.de.pool.ntp.org
