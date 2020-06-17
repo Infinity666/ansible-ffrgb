@@ -41,3 +41,8 @@
   hosts: [unms.ffrgb, unifi.ffrgb, tiles.ffrgb]
   roles:
   - docker
+
+- name: Setup tile server
+  hosts: tiles.ffrgb
+  roles:
+  - tileserver

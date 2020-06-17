@@ -1,0 +1,33 @@
+---
+
+- name: Create data directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - /opt/tileserver
+  - /opt/tileserver/styles
+
+- name: Configre tileserver
+  copy:
+    src: "{{ item }}"
+    dest: /opt/tileserver/{{ item }}
+  with_items:
+  - config.json
+  - styles/day.json
+  - styles/night.json
+  notify: Restart tileserver
+
+- name: Run tileserver container
+  docker_container:
+    name: tileserver
+    image: maptiler/tileserver-gl
+    interactive: yes
+    ports:
+    - "80:80"
+    - "8080:8080"
+    restart_policy: unless-stopped
+    state: started
+    tty: yes
+    volumes:
+    - "/opt/tileserver:/data"
