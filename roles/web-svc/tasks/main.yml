@@ -1,9 +1,8 @@
 ---
 
-- name: Setup reverse proxy
-  include_tasks: reverse.yml
-  with_items: "{{ rev_proxy }}"
+- name: Setup web service
+  include_tasks: websvc.yml
+  with_items: "{{ web_services }}"
   vars:
-    rev_domain: "{{ item.domain }}"
-    rev_aliases: "{{ item.aliases }}"
-    rev_target: "{{ item.target }}"
+    domain: "{{ item.domain }}"
+    web_svc: "{{ item.id }}"

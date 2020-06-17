@@ -1,0 +1,17 @@
+---
+
+- name: Ensure certificates are available
+  command: openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/nginx/ssl/{{ domain }}.key -out /etc/nginx/ssl/{{ domain }}.crt -days 730 -subj "/CN={{ domain }}" creates=/etc/nginx/ssl/{{ domain }}.crt
+  notify: Restart nginx
+
+- name: Configure certificate manager
+  template: src={{ web_svc }}_certs.j2 dest=/etc/acertmgr/{{ domain }}.conf
+  notify: Run acertmgr
+
+- name: Configure vhosts
+  template: src={{ web_svc }}_vhost.j2 dest=/etc/nginx/sites-available/{{ web_svc }}
+  notify: Restart nginx
+
+- name: Enable vhosts
+  file: src=/etc/nginx/sites-available/{{ web_svc }} dest=/etc/nginx/sites-enabled/{{ web_svc }} state=link
+  notify: Restart nginx

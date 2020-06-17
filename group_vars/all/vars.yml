@@ -47,14 +47,8 @@ pve_targets:
 - pve01.ffrgb
 - pve02.ffrgb
 
-rev_proxy:
-- domain: tiles.regensburg.freifunk.net
-  aliases:
-  - 1.omt.regensburg.freifunk.net
-  - 2.omt.regensburg.freifunk.net
-  - 3.omt.regensburg.freifunk.net
-  - 4.omt.regensburg.freifunk.net
-  target: "http://10.90.224.104:8080"
-
 site: ffrgb
 site_domain: regensburg.freifunk.net
+
+web_services:
+- { id: tiles, domain: tiles.regensburg.freifunk.net }
