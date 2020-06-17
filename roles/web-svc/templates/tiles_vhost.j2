@@ -25,8 +25,8 @@ server {
 	ssl_certificate_key /etc/nginx/ssl/{{ domain }}.key;
 	ssl_certificate /etc/nginx/ssl/{{ domain }}.crt;
 
-	location ~ /d/(.*) {
-		proxy_pass http://10.90.224.104:8080/styles/basic-preview/$1;
+	location ~ /d/(.*\.png|.*\.webp) {
+		proxy_pass http://10.90.224.103/styles/day/$1;
 
 		proxy_cache tilecache;
 		proxy_cache_use_stale error timeout invalid_header updating http_500 http_502 http_503 http_504;
@@ -38,8 +38,8 @@ server {
 		expires 7d;
 	}
 
-	location ~ /n/(.*) {
-		proxy_pass http://10.90.224.104:8080/styles/custom/$1;
+	location ~ /n/(.*\.png|.*\.webp) {
+		proxy_pass http://10.90.224.103/styles/night/$1;
 
 		proxy_cache tilecache;
 		proxy_cache_use_stale error timeout invalid_header updating http_500 http_502 http_503 http_504;
