@@ -1,7 +1,7 @@
 ---
 
-- name: Restart node_exporter
-  service: name=node_exporter state=restarted
-
 - name: Reload systemd
   command: systemctl daemon-reload
+
+- name: Restart node_exporter
+  service: name=node_exporter state=restarted
