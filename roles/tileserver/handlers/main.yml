@@ -1,16 +1,4 @@
 ---
 
 - name: Restart tileserver
-  docker_container:
-    name: tileserver
-    image: maptiler/tileserver-gl
-    interactive: yes
-    ports:
-    - "80:80"
-    - "8080:8080"
-    restart: yes
-    restart_policy: unless-stopped
-    state: started
-    tty: yes
-    volumes:
-    - "/opt/tileserver:/data"
+  command: docker restart tileserver
