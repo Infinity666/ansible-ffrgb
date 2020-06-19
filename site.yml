@@ -37,8 +37,8 @@
   - prometheus
   - grafana
 
-- name: Setup docker servers
-  hosts: [unms.ffrgb, unifi.ffrgb, tiles.ffrgb]
+- name: Setup unms server
+  hosts: unms.ffrgb
   roles:
   - docker
 
