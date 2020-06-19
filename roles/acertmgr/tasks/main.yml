@@ -1,29 +1,44 @@
 ---
 
 - name: Install dependencies
-  apt: name={{ item }}
-  with_items:
-  - python3-cryptography
-  - python3-dnspython
-  - python3-yaml
-  - python3-pkg-resources
+  apt:
+    name:
+    - python3-cryptography
+    - python3-dnspython
+    - python3-yaml
+    - python3-pkg-resources
 
 - name: Find current acertmgr version
-  get_url: url="https://raw.githubusercontent.com/moepman/acertmgr/master/version.txt" dest=/tmp/acertmgr.version
+  get_url:
+    url: "https://raw.githubusercontent.com/moepman/acertmgr/master/version.txt"
+    dest: /tmp/acertmgr.version
   vars:
     ansible_connection: local
 
 - name: Install acertmgr
-  apt: deb="https://github.com/moepman/acertmgr/releases/download/{{ lookup('file', '/tmp/acertmgr.version') }}/python3-acertmgr_{{ lookup('file', '/tmp/acertmgr.version') }}-1_all.deb"
+  apt:
+   deb: "https://github.com/moepman/acertmgr/releases/download/{{ lookup('file', '/tmp/acertmgr.version') }}/python3-acertmgr_{{ lookup('file', '/tmp/acertmgr.version') }}-1_all.deb"
 
 - name: Create config directories
-  file: path=/etc/acertmgr state=directory mode=0755
+  file:
+    path: /etc/acertmgr
+    state: directory
+    mode: 0755
 
 - name: Configure acertmgr
-  template: src=acertmgr.conf.j2 dest=/etc/acertmgr/acertmgr.conf
+  template:
+    src: acertmgr.conf.j2
+    dest: /etc/acertmgr/acertmgr.conf
 
 - name: Create challenge directory
-  file: path=/var/www/acme-challenge/ owner=root mode=0755 state=directory
+  file:
+    path: /var/www/acme-challenge/
+    owner: root
+    mode: 0755
+    state: directory
 
 - name: Enable acertmgr cronjob
-  cron: name=certmgr special_time=daily job=/usr/bin/acertmgr
+  cron:
+    name: certmgr
+    special_time: daily
+    job: /usr/bin/acertmgr
