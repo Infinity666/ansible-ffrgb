@@ -5,21 +5,21 @@
 
 - name: Create certificate directory
   file: path=/etc/nginx/ssl state=directory mode=0750
-  when: nginx_ssl == True
+  when: nginx_ssl
 
 - name: Ensure certificates are available
   command: openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/nginx/ssl/{{ ansible_fqdn }}.key -out /etc/nginx/ssl/{{ ansible_fqdn }}.crt -days 730 -subj "/CN={{ ansible_fqdn }}" creates=/etc/nginx/ssl/{{ ansible_fqdn }}.crt
-  when: nginx_ssl == True
+  when: nginx_ssl
   notify: Restart nginx
 
 - name: Ensure correct certificate permissions
   file: path=/etc/nginx/ssl/{{ ansible_fqdn }}.key owner=root mode=0400
-  when: nginx_ssl == True
+  when: nginx_ssl
   notify: Restart nginx
 
 - name: Create DH parameters
   command: openssl dhparam -outform PEM -out {{ item }} 2048 creates={{ item }}
-  when: nginx_ssl == True
+  when: nginx_ssl
   with_items:
   - /etc/nginx/dhparam.pem
 
@@ -29,7 +29,7 @@
 
 - name: Configure default vhost
   template: src=default.j2 dest=/etc/nginx/sites-available/default
-  when: nginx_ssl == True
+  when: nginx_ssl
   notify: Restart nginx
 
 - name: Ensure network and dns are available before nginx
