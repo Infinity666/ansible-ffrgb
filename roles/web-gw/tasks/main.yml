@@ -1,7 +1,13 @@
 ---
 
 - name: Ensure certificates are available
-  command: openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/nginx/ssl/{{ ansible_fqdn }}.key -out /etc/nginx/ssl/{{ ansible_fqdn }}.crt -days 730 -subj "/CN={{ ansible_fqdn }}" creates=/etc/nginx/ssl/{{ ansible_fqdn }}.crt
+  command:
+    cmd: >
+      openssl req -x509 -nodes -newkey rsa:2048
+      -keyout /etc/nginx/ssl/{{ ansible_fqdn }}.key
+      -out /etc/nginx/ssl/{{ ansible_fqdn }}.crt
+      -days 730 -subj "/CN={{ ansible_fqdn }}"
+    creates: /etc/nginx/ssl/{{ ansible_fqdn }}.crt
   notify: Restart nginx
 
 - name: Create web content directory

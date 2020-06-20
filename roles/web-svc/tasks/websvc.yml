@@ -1,7 +1,13 @@
 ---
 
 - name: Ensure certificates are available
-  command: openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/nginx/ssl/{{ domain }}.key -out /etc/nginx/ssl/{{ domain }}.crt -days 730 -subj "/CN={{ domain }}" creates=/etc/nginx/ssl/{{ domain }}.crt
+  command:
+    cmd: >
+      openssl req -x509 -nodes -newkey rsa:2048
+      -keyout /etc/nginx/ssl/{{ domain }}.key
+      -out /etc/nginx/ssl/{{ domain }}.crt
+      -days 730 -subj "/CN={{ domain }}"
+    creates: /etc/nginx/ssl/{{ domain }}.crt
   notify: Restart nginx
 
 - name: Configure certificate manager
