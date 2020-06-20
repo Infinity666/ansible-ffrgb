@@ -8,16 +8,9 @@
     - python3-yaml
     - python3-pkg-resources
 
-- name: Find current acertmgr version
-  get_url:
-    url: "https://raw.githubusercontent.com/moepman/acertmgr/master/version.txt"
-    dest: /tmp/acertmgr.version
-  vars:
-    ansible_connection: local
-
 - name: Install acertmgr
   apt:
-   deb: "https://github.com/moepman/acertmgr/releases/download/{{ lookup('file', '/tmp/acertmgr.version') }}/python3-acertmgr_{{ lookup('file', '/tmp/acertmgr.version') }}-1_all.deb"
+    deb: "https://github.com/moepman/acertmgr/releases/download/{{ acertmgr_version }}/python3-acertmgr_{{ acertmgr_version }}-1_all.deb"
 
 - name: Create config directories
   file:

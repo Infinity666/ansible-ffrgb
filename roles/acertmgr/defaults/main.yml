@@ -1,0 +1,3 @@
+---
+
+acertmgr_version: "{{ lookup('url', 'https://raw.githubusercontent.com/moepman/acertmgr/master/version.txt') | trim }}"
