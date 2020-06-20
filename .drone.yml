@@ -1,0 +1,12 @@
+---
+
+name: playbook
+kind: pipeline
+type: docker
+
+steps:
+- name: lint
+  image: alpine:latest
+  commands:
+  - apk add git ansible ansible-lint
+  - ansible-lint -x305,403,701
