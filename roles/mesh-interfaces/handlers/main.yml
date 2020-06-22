@@ -4,4 +4,4 @@
   command: /sbin/ifreload -a
 
 - name: Reload systemd
-  command: systemctl daemon-reload
+  systemd: daemon_reload=yes

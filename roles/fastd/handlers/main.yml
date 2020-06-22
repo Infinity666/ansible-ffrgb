@@ -1,8 +1,8 @@
 ---
 
+- name: Reload systemd
+  systemd: daemon_reload=yes
+
 - name: Restart fastd
   service: name=fastd@{{ site_code }}{{ item }} state=restarted
   with_sequence: start=0 count={{ fastd_instances }}
-
-- name: Reload systemd
-  command: systemctl daemon-reload
