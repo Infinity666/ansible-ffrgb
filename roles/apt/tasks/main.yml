@@ -3,20 +3,16 @@
 - name: Configure apt not to install recommends packages
   copy: src=apt-recommends.conf dest=/etc/apt/apt.conf.d/40recommends
 
-- name: Install apt https transport plugin
-  apt: name=apt-transport-https
-
-- name: Install debian-goodies for checkrestart
-  apt: name={{ item }}
-  with_items:
-  - debian-goodies
-  - lsof
+- name: Install apt related tools
+  apt:
+    name:
+    - apt-transport-https
+    - debian-goodies
+    - lsof
+    - unattended-upgrades
 
 - name: Configure periodic apt updates
   copy: src=apt-periodic.conf dest=/etc/apt/apt.conf.d/10periodic
-
-- name: Install unattended-upgrades
-  apt: name=unattended-upgrades
 
 - name: Configure unattended-upgrades
   copy: src=unattended-upgrades.conf dest=/etc/apt/apt.conf.d/50unattended-upgrades
