@@ -51,3 +51,8 @@
   hosts: tiles.ffrgb
   roles:
   - tileserver
+
+- name: Setup netbox server
+  hosts: netbox.ffrgb
+  roles:
+  - netbox

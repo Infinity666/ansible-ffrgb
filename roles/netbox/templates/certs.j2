@@ -1,0 +1,15 @@
+---
+
+{{ netbox_domain }}:
+- path: /etc/nginx/ssl/{{ netbox_domain }}.key
+  user: root
+  group: root
+  perm: '400'
+  format: key
+  action: '/usr/sbin/service nginx restart'
+- path: /etc/nginx/ssl/{{ netbox_domain }}.crt
+  user: root
+  group: root
+  perm: '400'
+  format: crt,ca
+  action: '/usr/sbin/service nginx restart'
