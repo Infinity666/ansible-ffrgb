@@ -1,0 +1,34 @@
+---
+# Use chronyd to lock time via PHC to hosts RTC
+
+- name: Install chrony
+  apt:
+    name: chrony
+    state: latest
+    install_recommends: no
+
+- name: Load kmod ptp_kvm at boot time
+  blockinfile:
+    path: /etc/modules-load.d/ptp_kvm.conf
+    create: yes
+    owner: root
+    mode: '0400'
+    block: |
+      # Load VirtIO PTP driver for chrony
+      ptp_kvm
+  register: load_ptp_kvm
+  when:
+  - ansible_virtualization_role == 'guest'
+  - ansible_virtualization_type == 'kvm'
+
+- name: Load kmod ptp_kvm
+  modprobe:
+    name: ptp_kvm
+    state: present
+  when: not (load_ptp_kvm is skipped)
+
+- name: Configure chronyd
+  template:
+    src: chrony.conf.j2
+    dest: /etc/chrony/chrony.conf
+  notify: Restart chrony

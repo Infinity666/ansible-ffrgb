@@ -5,3 +5,6 @@
 
 - name: Restart ntpd
   service: name=ntpd state=restarted
+
+- name: Restart chrony
+  service: name=chrony state=restarted

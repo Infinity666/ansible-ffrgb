@@ -1,11 +1,16 @@
 ---
+# Select best time source
+# * on kvm sync to hypervisor rtc within nanoseconds accuracy
+# * on anything else use ntpd wich supports only milliseconds accuracy
 
-- name: Install ntp
-  apt: name=ntp
+- name: Setup chrony
+  include_tasks: chrony.yml
+  register: ntp_use_chrony
+  when:
+  - ansible_virtualization_role == 'guest'
+  - ansible_virtualization_type == 'kvm'
 
-- name: Configure ntp
-  template: src=ntp.conf.j2 dest=/etc/ntp.conf
-  notify: Restart ntp
-
-- name: Start the ntp service
-  service: name=ntp state=started enabled=yes
+- name: Setup ntpd
+  include_tasks: ntp.yml
+  when:
+  - ntp_use_chrony is skipped

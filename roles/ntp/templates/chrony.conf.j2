@@ -1,0 +1,27 @@
+# {{ ansible_managed }}
+
+{% if not (load_ptp_kvm is skipped) %}
+refclock PHC /dev/ptp0 poll 2
+{% elif ntp_servers is defined %}
+{% for srv in ntp_servers %}
+server {{ srv }} iburst
+{% endfor %}
+{% else %}
+pool 2.debian.pool.ntp.org iburst
+{% endif %}
+
+{% if ntp_peers is defined %}
+{% for peer in ntp_peers %}
+peer {{ peer }}
+{% endfor %}
+{% endif %}
+
+keyfile /etc/chrony/chrony.keys
+driftfile /var/lib/chrony/chrony.drift
+logdir /var/log/chrony
+maxupdateskew 100.0
+rtcsync
+makestep 1 3
+
+# Do not allow chronyc for security reasons
+cmdport 0
