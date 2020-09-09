@@ -55,8 +55,6 @@
     remote_src: yes
     creates: '/opt/netbox-{{ netbox_version }}'
 
-# TODO user/group/chown?
-
 - name: Configure netbox
   template:
     src: configuration.py.j2
@@ -69,6 +67,16 @@
     requirements: '/opt/netbox-{{ netbox_version }}/requirements.txt'
     virtualenv: '/opt/netbox-{{ netbox_version }}/venv'
     virtualenv_command: '/usr/bin/python3 -m venv'
+
+- name: Netbox file permissions
+  file:
+    path: '/opt/netbox-{{ netbox_version }}'
+    owner: '{{ netbox_user }}'
+    group: '{{ netbox_group }}'
+    mode: preserve
+    state: directory
+    recursive: yes
+    create: no
 
 # TODO - still manual work
 # * Run Database Migrations
