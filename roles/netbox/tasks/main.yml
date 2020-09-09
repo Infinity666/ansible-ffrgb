@@ -28,12 +28,18 @@
     - python-psycopg2
 
 - name: Configure PostgreSQL database
-  postgresql_db: name={{ netbox_dbname }}
+  postgresql_db:
+    name: '{{ netbox_dbname }}'
   become: true
   become_user: postgres
 
 - name: Configure PostgreSQL user
-  postgresql_user: db={{ netbox_dbname }} name={{ netbox_dbuser }} password={{ netbox_dbpass }} priv=ALL state=present
+  postgresql_user:
+    db: '{{ netbox_dbname }}'
+    name: '{{ netbox_dbuser }}'
+    password: '{{ netbox_dbpass }}'
+    priv: ALL
+    state: present
   become: true
   become_user: postgres
 
@@ -43,14 +49,26 @@
 # TODO configure redis?
 
 - name: Unpack netbox
-  unarchive: src=https://github.com/netbox-community/netbox/archive/v{{ netbox_version }}.tar.gz dest=/opt remote_src=yes creates=/opt/netbox-{{ netbox_version }}
-  # TODO user/group/chown?
+  unarchive:
+    src: 'https://github.com/netbox-community/netbox/archive/v{{ netbox_version }}.tar.gz'
+    dest: /opt
+    remote_src: yes
+    creates: '/opt/netbox-{{ netbox_version }}'
+
+# TODO user/group/chown?
 
 - name: Configure netbox
-  template: src=configuration.py.j2 dest=/opt/netbox-{{ netbox_version }}/netbox/netbox/configuration.py owner={{ netbox_user }} group={{ netbox_group }}
+  template:
+    src: configuration.py.j2
+    dest: '/opt/netbox-{{ netbox_version }}/netbox/netbox/configuration.py'
+    owner: '{{ netbox_user }}'
+    group: '{{ netbox_group }}'
 
 - name: Install venv
-  pip: requirements=/opt/netbox-{{ netbox_version }}/requirements.txt virtualenv=/opt/netbox-{{ netbox_version }}/venv virtualenv_command="/usr/bin/python3 -m venv"
+  pip:
+    requirements: '/opt/netbox-{{ netbox_version }}/requirements.txt'
+    virtualenv: '/opt/netbox-{{ netbox_version }}/venv'
+    virtualenv_command: '/usr/bin/python3 -m venv'
 
 # TODO - still manual work
 # * Run Database Migrations
@@ -60,7 +78,12 @@
 # * systemd Configuration
 
 - name: Ensure certificates are available
-  command: openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/nginx/ssl/{{ netbox_domain }}.key -out /etc/nginx/ssl/{{ netbox_domain }}.crt -days 730 -subj "/CN={{ netbox_domain }}" creates=/etc/nginx/ssl/{{ netbox_domain }}.crt
+  command: >
+    openssl req -x509 -nodes -newkey rsa:2048
+    -keyout /etc/nginx/ssl/{{ netbox_domain }}.key -out /etc/nginx/ssl/{{ netbox_domain }}.crt
+    -days 730 -subj "/CN={{ netbox_domain }}"
+  changed_when: True
+  creates: '/etc/nginx/ssl/{{ netbox_domain }}.crt'
   notify: Restart nginx
 
 #- name: Configure certificate manager for netbox
@@ -68,9 +91,18 @@
 #  notify: Run acertmgr
 
 - name: Configure vhost
-  template: src=vhost.j2 dest=/etc/nginx/sites-available/netbox
+  template:
+    src: vhost.j2
+    dest: /etc/nginx/sites-available/netbox
+    owner: root
+    mode: '0644'
   notify: Restart nginx
 
 - name: Enable vhost
-  file: src=/etc/nginx/sites-available/netbox dest=/etc/nginx/sites-enabled/netbox state=link
+  file:
+    src: /etc/nginx/sites-available/netbox
+    dest: /etc/nginx/sites-enabled/netbox
+    state: link
+    owner: root
+    mode: preserve
   notify: Restart nginx
