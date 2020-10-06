@@ -24,7 +24,7 @@
   - dhcpd
   - respondd
   - yanic
-  - web-gw
+  - web_gw
 
 - name: Setup web service proxy
   hosts: web.regensburg.freifunk.net
