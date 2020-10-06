@@ -18,7 +18,7 @@
   - fastd
   - fastd-exporter
   - interfaces
-  - exit-ip
+  - exit_ip
   - dns
   - radvd
   - dhcpd
