@@ -1,7 +1,0 @@
----
-
-- name: Install git
-  apt: name=git
-
-- name: Install ca-certificates
-  apt: name=ca-certificates
