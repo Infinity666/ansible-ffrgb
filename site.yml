@@ -17,7 +17,7 @@
   - bird
   - fastd
   - fastd-exporter
-  - mesh-interfaces
+  - interfaces
   - exit-ip
   - dns
   - radvd
