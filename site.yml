@@ -11,7 +11,7 @@
 - name: Setup gateway servers
   hosts: [gw11.regensburg.freifunk.net, gw21.regensburg.freifunk.net, gw31.regensburg.freifunk.net, gw12.regensburg.freifunk.net, gw22.regensburg.freifunk.net]
   roles:
-  - gw-admin-ssh-keys
+  - root_keys
   - arp_cache
   - batman
   - bird
