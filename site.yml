@@ -29,7 +29,7 @@
 - name: Setup web service proxy
   hosts: web.regensburg.freifunk.net
   roles:
-  - web-svc
+  - web_svc
 
 - name: Setup stats server
   hosts: stats.ffrgb
