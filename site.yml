@@ -16,7 +16,7 @@
   - batman
   - bird
   - fastd
-  - fastd-exporter
+  - fastd_exporter
   - interfaces
   - exit_ip
   - dns
