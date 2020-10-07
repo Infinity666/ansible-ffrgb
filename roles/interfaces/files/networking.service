@@ -1,5 +1,5 @@
 [Unit]
-Description=ifupdown2 networking initialization
+Description=Network initialization
 Documentation=man:interfaces(5) man:ifup(8) man:ifdown(8)
 DefaultDependencies=no
 Before=network.target shutdown.target network-online.target
@@ -10,6 +10,7 @@ Type=oneshot
 RemainAfterExit=yes
 SyslogIdentifier=networking
 TimeoutStopSec=30s
+EnvironmentFile=/etc/default/networking
 ExecStart=/usr/share/ifupdown2/sbin/start-networking start
 ExecStop=/usr/share/ifupdown2/sbin/start-networking stop
 ExecReload=/usr/share/ifupdown2/sbin/start-networking reload

@@ -1,10 +1,14 @@
 ---
 
 - name: Install dependencies
-  apt: name=python-pkg-resources
+  apt:
+    name:
+    - bridge-utils
+    - python-pkg-resources
 
+# work-around to get a version new enough not to screw up forwarding setting on all interfaces
 - name: Install ifupdown2
-  apt: name=ifupdown2 state=latest
+  apt: deb=http://ftp.de.debian.org/debian/pool/main/i/ifupdown2/ifupdown2_3.0.0-1_all.deb
 
 - name: Uninstall ifupdown
   apt: name=ifupdown state=absent
