@@ -1,11 +1,11 @@
 ---
 
 - name: Install powerdns
-  apt: name={{ item }}
-  with_items:
-  - pdns-backend-bind
-  - pdns-recursor
-  - pdns-server
+  apt:
+    name:
+    - pdns-backend-bind
+    - pdns-recursor
+    - pdns-server
 
 - name: Create zone directory
   file: path=/etc/powerdns/bind/ state=directory
