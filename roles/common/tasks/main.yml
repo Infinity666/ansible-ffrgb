@@ -1,29 +1,29 @@
 ---
 
 - name: Install misc software
-  apt: name={{ item }}
-  with_items:
-  - ca-certificates
-  - dnsutils
-  - git
-  - htop
-  - less
-  - mtr-tiny
-  - net-tools
-  - openssl
-  - psmisc
-  - pydf
-  - rsync
-  - sudo
-  - vim-nox
-  - zsh
-  - fail2ban
+  apt:
+    name:
+    - ca-certificates
+    - dnsutils
+    - git
+    - htop
+    - less
+    - mtr-tiny
+    - net-tools
+    - openssl
+    - psmisc
+    - pydf
+    - rsync
+    - sudo
+    - vim-nox
+    - zsh
+    - fail2ban
 
 - name: Install software on KVM VMs
-  apt: name={{ item }}
-  with_items:
-  - acpid
-  - qemu-guest-agent
+  apt:
+    name:
+    - acpid
+    - qemu-guest-agent
   when: ansible_virtualization_role == "guest" and ansible_virtualization_type == "kvm"
 
 - name: Configure misc software
