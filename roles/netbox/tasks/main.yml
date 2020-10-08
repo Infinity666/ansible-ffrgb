@@ -86,12 +86,12 @@
 # * systemd Configuration
 
 - name: Ensure certificates are available
-  command: >
-    openssl req -x509 -nodes -newkey rsa:2048
-    -keyout /etc/nginx/ssl/{{ netbox_domain }}.key -out /etc/nginx/ssl/{{ netbox_domain }}.crt
-    -days 730 -subj "/CN={{ netbox_domain }}"
-  changed_when: True
-  creates: '/etc/nginx/ssl/{{ netbox_domain }}.crt'
+  command:
+    cmd: >
+      openssl req -x509 -nodes -newkey rsa:2048
+      -keyout /etc/nginx/ssl/{{ netbox_domain }}.key -out /etc/nginx/ssl/{{ netbox_domain }}.crt
+      -days 730 -subj "/CN={{ netbox_domain }}"
+    creates: '/etc/nginx/ssl/{{ netbox_domain }}.crt'
   notify: Restart nginx
 
 #- name: Configure certificate manager for netbox
