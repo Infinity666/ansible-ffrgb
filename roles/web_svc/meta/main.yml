@@ -2,4 +2,4 @@
 
 dependencies:
 - { role: acertmgr }
-- { role: nginx, nginx_ssl: True }
+- { role: nginx, nginx_anonymize: True, nginx_ssl: True }
