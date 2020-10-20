@@ -1,0 +1,31 @@
+#################################
+# allow-axfr-ips	Allow zonetransfers only to these subnets
+#
+# allow-axfr-ips=127.0.0.0/8,::1
+allow-axfr-ips=127.0.0.1,::1
+
+#################################
+# dname-processing	If we should support DNAME records
+#
+# dname-processing=no
+dname-processing=yes
+
+#################################
+# launch	Which backends to launch and order to query them in
+#
+# launch=
+launch=gsqlite3
+
+gsqlite3-database=/var/lib/powerdns/powerdns.sqlite3
+
+#################################
+# master	Act as a master
+#
+# master=no
+master=yes
+
+#################################
+# only-notify	Only send AXFR NOTIFY to these IP addresses or netmasks
+#
+# only-notify=0.0.0.0/0,::/0
+only-notify=

@@ -1,0 +1,28 @@
+---
+
+- name: Enable powerdns apt-key
+  apt_key: url='https://repo.powerdns.com/FD380FBB-pub.asc'
+
+- name: Enable powerdns repository
+  apt_repository: repo='deb http://repo.powerdns.com/debian buster-auth-43 main'
+
+- name: Install powerdns
+  apt:
+    name:
+    - pdns-server
+    - pdns-backend-sqlite3
+    - sqlite3
+
+- name: Configure powerdns
+  template: src=pdns.conf.j2 dest=/etc/powerdns/pdns.conf
+  notify: Restart powerdns
+
+- name: Initialize database
+  command:
+    cmd: >
+      sqlite3 -init /usr/share/doc/pdns-backend-sqlite3/schema.sqlite3.sql
+      /var/lib/powerdns/powerdns.sqlite3
+    creates: /var/lib/powerdns/powerdns.sqlite3
+
+- name: Start the powerdns services
+  service: name=pdns state=started enabled=yes

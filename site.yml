@@ -26,6 +26,11 @@
   - yanic
   - web_gw
 
+- name: Setup name servers
+  hosts: ns1.regensburg.freifunk.net
+  roles:
+  - dns_auth
+
 - name: Setup web service proxy
   hosts: web.regensburg.freifunk.net
   roles:
