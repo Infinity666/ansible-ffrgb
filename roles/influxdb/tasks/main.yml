@@ -1,0 +1,10 @@
+---
+
+- name: Enable influxdb apt-key
+  apt_key: url='https://repos.influxdata.com/influxdb.key'
+
+- name: Enable influxdb repository
+  apt_repository: repo='deb https://repos.influxdata.com/debian buster stable'
+
+- name: Install influxdb
+  apt: name=influxdb

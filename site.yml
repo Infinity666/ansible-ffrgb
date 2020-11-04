@@ -26,6 +26,12 @@
   - yanic
   - web_gw
 
+- name: Setup grafana server
+  hosts: grafana.regensburg.freifunk.net
+  roles:
+  - influxdb
+  - grafana
+
 - name: Setup name servers
   hosts: ns1.regensburg.freifunk.net
   roles:
