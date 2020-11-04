@@ -3,6 +3,7 @@
 - name: Install powerdns
   apt:
     name:
+    - dnsdist
     - pdns-backend-bind
     - pdns-recursor
     - pdns-server
@@ -12,7 +13,6 @@
 
 - name: Configure powerdns
   template: src={{ item }}.j2 dest=/etc/powerdns/{{ item }}
-  tags: dns
   notify: Restart powerdns
   with_items:
   - bind/ffrgb.zone
@@ -21,8 +21,13 @@
   - pdns.conf
   - recursor.conf
 
-- name: Start the powerdns services
+- name: Configure dnsdist
+  template: src=dnsdist.conf.j2 dest=/etc/dnsdist/dnsdist.conf
+  notify: Restart dnsdist
+
+- name: Start the dns services
   service: name={{ item }} state=started enabled=yes
   with_items:
+  - dnsdist
   - pdns
   - pdns-recursor

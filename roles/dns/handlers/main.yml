@@ -5,3 +5,6 @@
   with_items:
    - pdns
    - pdns-recursor
+
+- name: Restart dnsdist
+  service: name=dnsdist state=restarted
