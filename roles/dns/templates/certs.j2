@@ -1,0 +1,15 @@
+---
+
+{{ ansible_fqdn }}:
+- path: /etc/dnsdist/{{ ansible_fqdn }}.crt
+  user: _dnsdist
+  group: _dnsdist
+  perm: '400'
+  format: crt,ca
+  action: '/usr/sbin/service dnsdist restart'
+- path: /etc/dnsdist/{{ ansible_fqdn }}.key
+  user: _dnsdist
+  group: _dnsdist
+  perm: '400'
+  format: key
+  action: '/usr/sbin/service dnsdist restart'

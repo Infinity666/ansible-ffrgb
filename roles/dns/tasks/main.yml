@@ -14,6 +14,20 @@
     - pdns-recursor
     - pdns-server
 
+- name: Ensure certificates are available
+  command:
+    cmd: >
+      openssl req -x509 -nodes -newkey rsa:2048
+      -keyout /etc/dnsdist/{{ ansible_fqdn }}.key
+      -out /etc/dnsdist/{{ ansible_fqdn }}.crt
+      -days 730 -subj "/CN={{ ansible_fqdn }}"
+    creates: /etc/dnsdist/{{ ansible_fqdn }}.crt
+  notify: Restart dnsdist
+
+- name: Configure certificate manager
+  template: src=certs.j2 dest=/etc/acertmgr/{{ ansible_fqdn }}_dns.conf
+  notify: Run acertmgr
+
 - name: Create zone directory
   file: path=/etc/powerdns/bind/ state=directory
 

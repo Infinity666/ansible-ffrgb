@@ -4,9 +4,9 @@ setLocal('127.0.0.1:5353')
 
 newServer({address="127.0.0.1", qps=1, name="localhost"})
 
-addTLSLocal('127.0.0.1','/etc/nginx/ssl/{{ ansible_fqdn }}.crt', '/etc/nginx/ssl/{{ ansible_fqdn }}.key')
-addTLSLocal('{{ batman_ipv4 | ipaddr('address') }}','/etc/nginx/ssl/{{ ansible_fqdn }}.crt', '/etc/nginx/ssl/{{ ansible_fqdn }}.key')
-addTLSLocal('{{ batman_ipv6 | ipaddr('address') }}','/etc/nginx/ssl/{{ ansible_fqdn }}.crt', '/etc/nginx/ssl/{{ ansible_fqdn }}.key')
+addTLSLocal('127.0.0.1','/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
+addTLSLocal('{{ batman_ipv4 | ipaddr('address') }}','/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
+addTLSLocal('{{ batman_ipv6 | ipaddr('address') }}','/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
 
 -- disable security status polling via DNS
 setSecurityPollSuffix("")
