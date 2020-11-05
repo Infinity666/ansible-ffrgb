@@ -1,5 +1,11 @@
 ---
 
+- name: Enable powerdns apt-key
+  apt_key: url='https://repo.powerdns.com/FD380FBB-pub.asc'
+
+- name: Enable powerdns repository
+  apt_repository: repo='deb http://repo.powerdns.com/debian buster-dnsdist-15 main'
+
 - name: Install powerdns
   apt:
     name:
