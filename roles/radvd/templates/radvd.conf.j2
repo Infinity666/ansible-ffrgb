@@ -19,6 +19,6 @@ interface br-{{ site_code }} {
     AdvRouterAddr on;
   };
   {% endif %}
-  RDNSS {{ batman_ipv6 | ipaddr('address')}} {
+  RDNSS {{ batman_ipv6 | ipaddr('address') }} {
   };
 };
