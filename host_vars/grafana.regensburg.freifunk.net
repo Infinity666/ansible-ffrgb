@@ -1,0 +1,25 @@
+---
+
+# yanic needs this
+site_code: ffrgb_cty
+
+yanic_repondd_enable: false
+
+yanic_respondd_interface: ens18
+yanic_respondd_ip: true
+
+yanic_nodes_prune_after: 60d
+yanic_nodes_offline_after: 5m
+
+yanic_meshviewer_enable: false
+
+yanic_nodelist_enable: true
+
+yanic_database_delete_after: 720d
+
+yanic_influxdb:
+- enable: true
+  host: http://127.0.0.1:8086
+  database: ffrgb
+  username: ""
+  password: ""

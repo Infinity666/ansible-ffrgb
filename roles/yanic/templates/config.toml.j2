@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
 [respondd]
-enable           = {{ yanic_respondd | ternary('true','false') }}
+enable           = {{ yanic_respondd_enable | ternary('true','false') }}
 collect_interval = "{{ yanic_respondd_collect_interval }}"
 synchronize      = "{{ yanic_respondd_synchronize_interval }}"
 
@@ -9,6 +9,11 @@ domains            = ["{{ site_code }}"]
 
 [[respondd.interfaces]]
 ifname = "{{ yanic_respondd_interface }}"
+{% if yanic_respondd_ip == true %}
+ip_address = "{{ ansible_default_ipv6.address }}"
+send_no_request = true
+port = 10001
+{% endif %}
 
 [webserver]
 enable  = {{ yanic_webserver | ternary('true','false') }}
@@ -47,7 +52,7 @@ graph_path     = "{{ yanic_meshviewer_graph }}"
 no_owner = true
 
 [[nodes.output.nodelist]]
-enable   = false
+enable   = {{ yanic_nodelist_enable | ternary('true','false') }}
 path = "/var/www/html/meshviewer/data/nodelist.json"
 
 [nodes.output.nodelist.filter]
@@ -76,9 +81,9 @@ prefix   = "{{ db.prefix }}"
 {% endfor %}
 
 [[database.connection.respondd]]
-enable   = {{ yanic_repondd_enable | ternary('true','false') }}
+enable   = {{ yanic_dbc_repondd_enable | ternary('true','false') }}
 type     = "udp6"
-address  = "{{ yanic_repondd_remotehost }}"
+address  = "{{ yanic_dbc_repondd_remotehost }}"
 
 [[database.connection.logging]]
 enable   = false

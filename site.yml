@@ -36,6 +36,7 @@
   roles:
   - influxdb
   - grafana
+  - yanic
 
 - name: Setup name servers
   hosts: ns1.regensburg.freifunk.net
