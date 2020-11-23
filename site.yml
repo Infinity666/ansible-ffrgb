@@ -26,6 +26,11 @@
   - yanic
   - web_gw
 
+- name: Setup gateway servers with VXoWG
+  hosts: [gw31.regensburg.freifunk.net]
+  roles:
+  - mesh_wg
+
 - name: Setup grafana server
   hosts: grafana.regensburg.freifunk.net
   roles:

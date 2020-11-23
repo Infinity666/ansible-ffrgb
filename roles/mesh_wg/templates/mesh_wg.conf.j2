@@ -1,0 +1,18 @@
+# {{ ansible_managed }}
+
+# vx-{{ site_code }}
+auto vx-{{ site_code }}
+iface vx-{{ site_code }}
+	vxlan-id	3120917
+	vxlan-learning	no
+	vxlan-local-tunnelip6	fe80::{{ gateway_id }}
+	vxlan-physdev	wg-ffrgb_tst
+	post-up		batctl -m bat-{{ site_code }} if add vx-{{ site_code }}
+
+# wg-{{ site_code }}
+auto wg-{{ site_code }}
+iface wg-{{ site_code }}
+	address		fe80::{{ gateway_id }}/128
+	ipv6-addrgen	no
+	link-type	wireguard
+	pre-up		wg setconf wg-{{ site_code }} /etc/wireguard/wg-{{ site_code }}.conf

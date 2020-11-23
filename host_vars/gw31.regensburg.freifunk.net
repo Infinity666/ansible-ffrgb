@@ -8,6 +8,8 @@ nextnode4: 10.90.96.1
 nextnode6: fdef:f30f:1337:cafe::1
 mtu: 1312
 
+wg_vni_id: 3120917
+
 fastd_port: 10030
 
 gateway_id: 31

@@ -1,0 +1,23 @@
+---
+
+- name: Enable backports
+  apt_repository: repo='deb http://deb.debian.org/debian buster-backports main'
+
+- name: Install kernel headers
+  apt: name=linux-headers-amd64
+
+- name: Install wireguard from backports
+  apt: name=wireguard-dkms default_release=buster-backports
+
+- name: Configure wireguard options
+  template: src=wg.conf.j2 dest=/etc/wireguard/wg-{{ site_code }}.conf force=no mode=0600
+  register: wg_new_config
+  notify: Reload interfaces
+
+- name: Generate wireguard keypair
+  command: sed -i 's/replace_me/$(wg genkey)/' /etc/wireguard/wg-{{ site_code }}.conf
+  when: wg_new_config.changed
+
+- name: Configure mesh interfaces
+  template: src=mesh_wg.conf.j2 dest=/etc/network/interfaces.d/mesh_wg.conf
+  notify: Reload interfaces
