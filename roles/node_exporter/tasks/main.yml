@@ -9,6 +9,27 @@
 - name: Configure node_exporter
   copy: src=node_exporter dest=/etc/default/node_exporter
 
+- name: Create configuration directory
+  file: path=/etc/node_exporter state=directory
+
+- name: Ensure certificates are available
+  command:
+    cmd: >
+      openssl req -x509 -nodes -newkey rsa:2048
+      -keyout /etc/node_exporter/{{ ansible_fqdn }}.key
+      -out /etc/node_exporter/{{ ansible_fqdn }}.crt
+      -days 730 -subj "/CN={{ ansible_fqdn }}"
+    creates: /etc/node_exporter/{{ ansible_fqdn }}.crt
+  notify: Restart node_exporter
+
+- name: Ensure correct certificate permissions
+  file: path=/etc/node_exporter/{{ ansible_fqdn }}.key owner=node_exporter mode=0400
+  notify: Restart node_exporter
+
+- name: Configure node_exporter TLS
+  template: src=web-config.yml.j2 dest=/etc/node_exporter/web-config.yml
+  notify: Restart node_exporter
+
 - name: Install systemd unit
   template: src=node_exporter.service.j2 dest=/lib/systemd/system/node_exporter.service
   notify:

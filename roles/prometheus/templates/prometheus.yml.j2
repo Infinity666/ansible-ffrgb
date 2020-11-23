@@ -27,6 +27,12 @@ rule_files:
 scrape_configs:
 {% if node_targets is defined %}
   - job_name: node
+    scheme: https
+    basic_auth:
+      username: prometheus
+      password: {{ prometheus_node_pass }}
+    tls_config:
+      insecure_skip_verify: true
     static_configs:
       - targets:
 {% for target in node_targets %}

@@ -1,1 +1,1 @@
-OPTIONS=""
+OPTIONS="--web.config=/etc/node_exporter/web-config.yml"

@@ -35,6 +35,7 @@ node_targets:
 - gw11.regensburg.freifunk.net:9100
 - gw21.regensburg.freifunk.net:9100
 - gw31.regensburg.freifunk.net:9100
+- grafana.regensburg.freifunk.net:9100
 - web.regensburg.freifunk.net:9100
 - stats.ffrgb:9100
 - unms.ffrgb:9100
@@ -47,6 +48,8 @@ ntp_servers:
 - 1.de.pool.ntp.org
 - 2.de.pool.ntp.org
 - 3.de.pool.ntp.org
+
+prometheus_node_pass: "{{ vault_prometheus_node_pass }}"
 
 prometheus_pve_user: prometheus@pve
 prometheus_pve_pass: "{{ vault_prometheus_pve_pass }}"
