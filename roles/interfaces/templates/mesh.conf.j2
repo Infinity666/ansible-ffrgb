@@ -21,17 +21,14 @@ iface bat-{{ site_code }}
 	hwaddress	f2:00:90:00:{{ gateway_id }}:20
 	mtu		1500
 	#
+	batman-gw-mode		server
 	batman-hop-penalty	5
 	batman-ifaces		dmy-{{ site_code }}
 	batman-ifaces-ignore-regex	.*_.*
+	batman-multicast-mode	disabled
+	batman-routing-algo	{{ batman_algo }}
 	#
-	# TODO use batman-xyz instead of batctl
-	# see /usr/share/ifupdown2/addons/batman_adv.py
-	#
-	up /usr/sbin/batctl -m bat-{{ site_code }} gw_mode server 100000 100000
 	up /usr/sbin/batctl -m bat-{{ site_code }} it 5000
-	up /usr/sbin/batctl -m bat-{{ site_code }} multicast_mode 0
-	up /usr/sbin/batctl -m bat-{{ site_code }} ra {{ batman_algo }}
 	up echo 2 > /sys/class/net/bat-{{ site_code }}/brport/multicast_router
 
 
