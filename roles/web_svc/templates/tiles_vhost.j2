@@ -14,7 +14,7 @@ server {
 	}
 }
 
-proxy_cache_path /var/lib/nginx/cache levels=1:2 keys_zone=tilecache:10m inactive=1d max_size=2g;
+proxy_cache_path /var/lib/nginx/cache levels=1:2 keys_zone=tilecache:20m inactive=7d max_size=2g;
 
 server {
 	listen 443 ssl http2;
