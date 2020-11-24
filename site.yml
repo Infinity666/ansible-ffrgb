@@ -37,6 +37,7 @@
   - influxdb
   - grafana
   - yanic
+  - web_stats
 
 - name: Setup name servers
   hosts: ns1.regensburg.freifunk.net

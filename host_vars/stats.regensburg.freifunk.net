@@ -19,6 +19,8 @@ yanic_database_delete_after: 720d
 
 yanic_dbc_repondd_enable: false
 
+nginx_ssl: true
+
 yanic_influxdb:
 - enable: true
   host: http://127.0.0.1:8086
