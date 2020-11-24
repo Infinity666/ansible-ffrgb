@@ -32,7 +32,7 @@
   - mesh_wg
 
 - name: Setup grafana server
-  hosts: grafana.regensburg.freifunk.net
+  hosts: stats.regensburg.freifunk.net
   roles:
   - influxdb
   - grafana

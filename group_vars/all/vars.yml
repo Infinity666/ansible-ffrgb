@@ -35,7 +35,8 @@ node_targets:
 - gw11.regensburg.freifunk.net:9100
 - gw21.regensburg.freifunk.net:9100
 - gw31.regensburg.freifunk.net:9100
-- grafana.regensburg.freifunk.net:9100
+- ns1.regensburg.freifunk.net:9100
+- stats.regensburg.freifunk.net:9100
 - web.regensburg.freifunk.net:9100
 - stats.ffrgb:9100
 - unms.ffrgb:9100

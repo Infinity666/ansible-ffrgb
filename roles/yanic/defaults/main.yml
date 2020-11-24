@@ -48,4 +48,4 @@ yanic_graphite:
   prefix: "freifunk"
 
 yanic_dbc_repondd_enable: true
-yanic_dbc_repondd_remotehost: "grafana.regensburg.freifunk.net:10001"
+yanic_dbc_repondd_remotehost: "stats.regensburg.freifunk.net:10001"
