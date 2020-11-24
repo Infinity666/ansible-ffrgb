@@ -9,7 +9,7 @@
 - name: Install grafana
   apt: name=grafana
 
-- nane: Install grafana rendering dependencies:
+- name: Install grafana rendering dependencies
   apt:
     name:
     - libxdamage1
