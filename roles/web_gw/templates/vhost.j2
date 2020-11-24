@@ -13,6 +13,11 @@ server {
 
 	root /var/www/html;
 
+	# VXoWG broker API
+	location /api {
+		proxy_pass http://localhost:8000/api;
+	}
+
 	# temp redirector server
 	location /move.php {
 		proxy_pass http://home.mephis.to:2342/move.php;
@@ -25,6 +30,7 @@ server {
 	location /firmware-ng/stable {
 		proxy_pass http://home.mephis.to:2342/ff/stable/images;
 	}
+
 	# post 11s
 	location /firmware-11s/experimental {
 		proxy_pass http://home.mephis.to:2342/ff/11s/experimental/images;
@@ -54,6 +60,7 @@ server {
 	location /firmware-ng/stable {
 		proxy_pass http://home.mephis.to:2342/ff/stable/images;
 	}
+
 	# post 11s
 	location /firmware-11s/experimental {
 		proxy_pass http://home.mephis.to:2342/ff/11s/experimental/images;
