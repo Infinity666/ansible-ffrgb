@@ -1,5 +1,7 @@
 ---
 
+grafana_rendering: True
+
 # yanic needs this
 site_code: ffrgb_cty
 

@@ -8,3 +8,27 @@
 
 - name: Install grafana
   apt: name=grafana
+
+- nane: Install grafana rendering dependencies:
+  apt:
+    name:
+    - libxdamage1
+    - libxext6
+    - libxi6
+    - libxtst6
+    - libnss3
+    - libnss3
+    - libcups2
+    - libxss1
+    - libxrandr2
+    - libasound2
+    - libatk1.0-0
+    - libatk-bridge2.0-0
+    - libpangocairo-1.0-0
+    - libpango-1.0-0
+    - libcairo2
+    - libatspi2.0-0
+    - libgtk3.0-cil
+    - libgdk3.0-cil
+    - libx11-xcb-dev
+  when: grafana_rendering
