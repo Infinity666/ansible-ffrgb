@@ -17,9 +17,11 @@ yanic_nodelist_enable: true
 
 yanic_database_delete_after: 720d
 
+yanic_dbc_repondd_enable: false
+
 yanic_influxdb:
 - enable: true
   host: http://127.0.0.1:8086
   database: ffrgb
-  username: ""
-  password: ""
+  username: "admin"
+  password: "{{ vault_yanic_influx_pw }}"
