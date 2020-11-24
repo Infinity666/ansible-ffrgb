@@ -19,7 +19,7 @@
   - fastd_exporter
   - interfaces
   - exit_ip
-  - dns
+  - dns_split
   - radvd
   - dhcpd
   - respondd
