@@ -1,0 +1,10 @@
+---
+
+- name: Run acertmgr
+  command: /usr/bin/acertmgr
+
+- name: Restart powerdns
+  service: name=pdns-recursor state=restarted
+
+- name: Restart dnsdist
+  service: name=dnsdist state=restarted

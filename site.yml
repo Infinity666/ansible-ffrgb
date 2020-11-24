@@ -49,6 +49,11 @@
   roles:
   - web_svc
 
+- name: Setup resolver
+  hosts: resolver.regensburg.freifunk.net
+  roles:
+  - dns_resolver
+
 - name: Setup stats server
   hosts: stats.ffrgb
   roles:

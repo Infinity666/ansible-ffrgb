@@ -1,0 +1,16 @@
+-- {{ ansible_managed }}
+
+setLocal('127.0.0.1')
+addLocal('::1')
+addLocal('{{ ansible_default_ipv4.address }}')
+addLocal('{{ ansible_default_ipv6.address }}')
+
+newServer({address="127.0.0.1:5300", qps=1, name="localhost"})
+
+addTLSLocal('127.0.0.1','/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
+addTLSLocal('::1','/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
+addTLSLocal('{{ ansible_default_ipv4.address }}','/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
+addTLSLocal('{{ ansible_default_ipv6.address }}','/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
+
+-- disable security status polling via DNS
+setSecurityPollSuffix("")

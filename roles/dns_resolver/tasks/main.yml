@@ -1,0 +1,41 @@
+---
+
+- name: Enable powerdns apt-key
+  apt_key: url='https://repo.powerdns.com/FD380FBB-pub.asc'
+
+- name: Enable powerdns repository
+  apt_repository: repo='deb http://repo.powerdns.com/debian buster-dnsdist-15 main'
+
+- name: Install powerdns
+  apt:
+    name:
+    - dnsdist
+    - pdns-recursor
+
+- name: Ensure certificates are available
+  command:
+    cmd: >
+      openssl req -x509 -nodes -newkey rsa:2048
+      -keyout /etc/dnsdist/{{ ansible_fqdn }}.key
+      -out /etc/dnsdist/{{ ansible_fqdn }}.crt
+      -days 730 -subj "/CN={{ ansible_fqdn }}"
+    creates: /etc/dnsdist/{{ ansible_fqdn }}.crt
+  notify: Restart dnsdist
+
+- name: Configure certificate manager
+  template: src=certs.j2 dest=/etc/acertmgr/{{ ansible_fqdn }}_dns.conf
+  notify: Run acertmgr
+
+- name: Configure powerdns
+  template: src=recursor.conf.j2 dest=/etc/powerdns/recursor.conf
+  notify: Restart powerdns
+
+- name: Configure dnsdist
+  template: src=dnsdist.conf.j2 dest=/etc/dnsdist/dnsdist.conf
+  notify: Restart dnsdist
+
+- name: Start the dns services
+  service: name={{ item }} state=started enabled=yes
+  with_items:
+  - dnsdist
+  - pdns-recursor
