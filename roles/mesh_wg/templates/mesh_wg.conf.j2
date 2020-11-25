@@ -3,11 +3,15 @@
 # vx-{{ site_code }}
 auto vx-{{ site_code }}
 iface vx-{{ site_code }}
-	vxlan-id	3120917
-	vxlan-learning	no
-	vxlan-local-tunnelip6	fe80::{{ gateway_id }}
-	vxlan-physdev	wg-ffrgb_tst
+	#vxlan-id	{{ vx_wg_vni }}
+	#vxlan-local-tunnelip6	fe80::{{ gateway_id }}
+	#vxlan-physdev	wg-ffrgb_tst
+	pre-up		ip -6 link add vx-{{ site_code }} type vxlan id {{ vx_wg_vni }} local fe80::{{ gateway_id }} dev wg-{{ site_code }} noudpcsum dstport 8472
+	up		ip link set vx-{{ site_code }} up
+	post-up		ip link set vx-{{ site_code }} mtu 1532
 	post-up		batctl -m bat-{{ site_code }} if add vx-{{ site_code }}
+	down		ip link set vx-{{ site_code }} down
+	post-down	ip -6 link del vx-{{ site_code }}
 
 # wg-{{ site_code }}
 auto wg-{{ site_code }}
@@ -15,4 +19,5 @@ iface wg-{{ site_code }}
 	address		fe80::{{ gateway_id }}/128
 	ipv6-addrgen	no
 	link-type	wireguard
+	mtu		1610
 	pre-up		wg setconf wg-{{ site_code }} /etc/wireguard/wg-{{ site_code }}.conf
