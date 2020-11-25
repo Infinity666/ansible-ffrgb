@@ -10,8 +10,6 @@ addACL('2001:678:ddc::/48')
 
 newServer({address='127.0.0.1:5300', qps=1, name='localhost'})
 
-addTLSLocal('127.0.0.1','/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
-addTLSLocal('::1','/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
 addTLSLocal('{{ ansible_default_ipv4.address }}', '/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
 addTLSLocal('{{ ansible_default_ipv6.address }}', '/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
 
