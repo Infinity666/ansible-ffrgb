@@ -5,12 +5,17 @@ addLocal('::1')
 addLocal('{{ ansible_default_ipv4.address }}')
 addLocal('{{ ansible_default_ipv6.address }}')
 
-newServer({address="127.0.0.1:5300", qps=1, name="localhost"})
+addACL('194.156.22.0/24')
+addACL('2001:678:ddc::/48')
+
+newServer({address='127.0.0.1:5300', qps=1, name='localhost'})
 
 addTLSLocal('127.0.0.1','/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
 addTLSLocal('::1','/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
-addTLSLocal('{{ ansible_default_ipv4.address }}','/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
-addTLSLocal('{{ ansible_default_ipv6.address }}','/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
+addTLSLocal('{{ ansible_default_ipv4.address }}', '/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
+addTLSLocal('{{ ansible_default_ipv6.address }}', '/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
+
+webserver('0.0.0.0:8053', '{{ prometheus_dnsdist_pass }}', '{{ prometheus_dnsdist_pass }}', {}, '194.156.22.3, 2001:678:ddc::3')
 
 -- disable security status polling via DNS
-setSecurityPollSuffix("")
+setSecurityPollSuffix('')

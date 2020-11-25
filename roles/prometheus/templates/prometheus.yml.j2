@@ -39,6 +39,17 @@ scrape_configs:
         - {{ target }}
 {% endfor %}
 {% endif %}
+{% if dnsdist_targets is defined %}
+  - job_name: dnsdist
+    basic_auth:
+      username: prometheus
+      password: {{ prometheus_dnsdist_pass }}
+    static_configs:
+      - targets:
+{% for target in dnsdist_targets %}
+        - {{ target }}
+{% endfor %}
+{% endif %}
 {% if fastd_targets is defined %}
   - job_name: fastd
     static_configs:

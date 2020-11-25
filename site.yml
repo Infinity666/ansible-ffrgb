@@ -31,10 +31,11 @@
   roles:
   - mesh_wg
 
-- name: Setup grafana server
+- name: Setup stats server
   hosts: stats.regensburg.freifunk.net
   roles:
   - influxdb
+  - prometheus
   - grafana
   - yanic
   - web_stats
@@ -53,12 +54,6 @@
   hosts: resolver.regensburg.freifunk.net
   roles:
   - dns_resolver
-
-- name: Setup stats server
-  hosts: stats.ffrgb
-  roles:
-  - prometheus
-  - grafana
 
 - name: Setup unms server
   hosts: unms.ffrgb

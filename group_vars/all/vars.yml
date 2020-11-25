@@ -2,6 +2,12 @@
 
 acertmgr_mode: webdir
 
+dnsdist_targets:
+- gw11.regensburg.freifunk.net:8053
+- gw21.regensburg.freifunk.net:8053
+- gw31.regensburg.freifunk.net:8053
+- resolver.regensburg.freifunk.net:8053
+
 fastd_targets:
 - gw11.regensburg.freifunk.net:9281
 - gw21.regensburg.freifunk.net:9281
@@ -36,9 +42,9 @@ node_targets:
 - gw21.regensburg.freifunk.net:9100
 - gw31.regensburg.freifunk.net:9100
 - ns1.regensburg.freifunk.net:9100
+- resolver.regensburg.freifunk.net:9100
 - stats.regensburg.freifunk.net:9100
 - web.regensburg.freifunk.net:9100
-- stats.ffrgb:9100
 - unms.ffrgb:9100
 - unifi.ffrgb:9100
 - tiles.ffrgb:9100
@@ -49,6 +55,8 @@ ntp_servers:
 - 1.de.pool.ntp.org
 - 2.de.pool.ntp.org
 - 3.de.pool.ntp.org
+
+prometheus_dnsdist_pass: "{{ vault_prometheus_dnsdist_pass }}"
 
 prometheus_node_pass: "{{ vault_prometheus_node_pass }}"
 
