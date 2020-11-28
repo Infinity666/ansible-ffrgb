@@ -1,8 +1,11 @@
 -- {{ ansible_managed }}
 
-setLocal('127.0.0.1:5353')
+setLocal('127.0.0.1')
+addLocal('::1')
+addLocal('{{ batman_ipv4 | ipaddr('address') }}')
+addLocal('{{ batman_ipv6 | ipaddr('address') }}')
 
-newServer({address='127.0.0.1', qps=1, name='localhost'})
+newServer({address='127.0.0.1:5353', qps=1, name='localhost'})
 
 addTLSLocal('{{ batman_ipv4 | ipaddr('address') }}', '/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')
 addTLSLocal('{{ batman_ipv6 | ipaddr('address') }}', '/etc/dnsdist/{{ ansible_fqdn }}.crt', '/etc/dnsdist/{{ ansible_fqdn }}.key')

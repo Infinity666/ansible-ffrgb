@@ -25,12 +25,12 @@ forward-zones=ffrgb=127.0.0.1:5300,90.10.in-addr.arpa=127.0.0.1:5300
 #################################
 # local-address IP addresses to listen on, separated by spaces or commas. Also accepts ports.
 #
-local-address=127.0.0.1,{{ batman_ipv4 | ipaddr('address') }},{{ batman_ipv6 | ipaddr('address') }}
+local-address=127.0.0.1
 
 #################################
 # local-port    port to listen on
 #
-local-port=53
+local-port=5353
 
 #################################
 # query-local-address6 Send out local IPv6 queries from this address or addresses. Disabled by default, which also disables outgoing
