@@ -8,6 +8,10 @@ dnsdist_targets:
 - gw31.regensburg.freifunk.net:8053
 - resolver.regensburg.freifunk.net:8053
 
+dns_slaves:
+- 195.201.117.207
+- 2a01:4f8:1c0c:7dda::1
+
 fastd_targets:
 - gw11.regensburg.freifunk.net:9281
 - gw21.regensburg.freifunk.net:9281

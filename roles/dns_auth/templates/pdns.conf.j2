@@ -2,7 +2,7 @@
 # allow-axfr-ips	Allow zonetransfers only to these subnets
 #
 # allow-axfr-ips=127.0.0.0/8,::1
-allow-axfr-ips=127.0.0.1,::1
+allow-axfr-ips=127.0.0.1,::1,{{ dns_slaves | join(',') }}
 
 #################################
 # dname-processing	If we should support DNAME records
